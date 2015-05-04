@@ -72,8 +72,6 @@ waf configure \
     --mandir="%{_mandir}" \
     --docdir="%{_docdir}/%{name}" \
     --confdir="%{_sysconfdir}/%{name}" \
-    --enable-joystick \
-    --enable-lirc \
     --disable-sdl1 --enable-sdl2 \
     --disable-build-date \
     --disable-debug
@@ -92,7 +90,6 @@ desktop-file-install etc/mpv.desktop
 for RES in 16 32 64; do
   install -Dpm 644 etc/mpv-icon-8bit-${RES}x${RES}.png %{buildroot}%{_datadir}/icons/hicolor/${RES}x${RES}/apps/%{name}.png
 done
-
 
 %post
 update-desktop-database &>/dev/null || :
