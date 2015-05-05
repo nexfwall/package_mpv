@@ -1,6 +1,6 @@
 Name:           mpv
 Version:        0.9.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Movie player playing most video formats and DVDs
 License:        GPLv2+
 URL:            http://%{name}.io/
@@ -12,6 +12,9 @@ Patch0:         %{name}-config.patch
 # Upstream commit to use waf >= 1.8 (reverted, rebased)
 # See https://github.com/mpv-player/mpv/issues/1363
 Patch1:         %{name}-old-waf.patch
+
+# https://github.com/mpv-player/mpv/pull/1914
+Patch2:         %{name}-lua-5.3.patch
 
 BuildRequires:  aalib-devel
 BuildRequires:  alsa-lib-devel
@@ -44,7 +47,6 @@ BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  python-docutils
 BuildRequires:  waf
 BuildRequires:  wayland-devel
-BuildRequires:  SDL2-devel
 
 Requires:       hicolor-icon-theme
 
@@ -63,6 +65,7 @@ output methods are supported.
 %patch1 -p1
 %endif
 
+%patch2 -p1 -b .lua53
 
 %build
 CCFLAGS="%{optflags}" \
@@ -72,7 +75,7 @@ waf configure \
     --mandir="%{_mandir}" \
     --docdir="%{_docdir}/%{name}" \
     --confdir="%{_sysconfdir}/%{name}" \
-    --disable-sdl1 --enable-sdl2 \
+    --disable-sdl1 --disable-sdl2 \
     --disable-build-date \
     --disable-debug
 
@@ -120,6 +123,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config(noreplace) %{_sysconfdir}/%{name}/input.conf
 
 %changelog
+* Tue May 05 2015 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.9.1-2
+- Disable SDL2 backend
+- Apply patch to fix osc bar
+
 * Mon May 04 2015 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.9.1-1
 - Update to 0.9.1
 - Enable SDL2 backend
