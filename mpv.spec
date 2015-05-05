@@ -1,6 +1,6 @@
 Name:           mpv
 Version:        0.9.1
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Movie player playing most video formats and DVDs
 License:        GPLv2+
 URL:            http://%{name}.io/
@@ -15,6 +15,7 @@ Patch1:         %{name}-old-waf.patch
 
 # https://github.com/mpv-player/mpv/pull/1914
 Patch2:         %{name}-lua-5.3.patch
+Patch3:         0001-Revert-lua-reject-Lua-5.3.patch
 
 BuildRequires:  aalib-devel
 BuildRequires:  alsa-lib-devel
@@ -66,6 +67,7 @@ output methods are supported.
 %endif
 
 %patch2 -p1 -b .lua53
+%patch3 -p1 -b .lua53
 
 %build
 CCFLAGS="%{optflags}" \
@@ -123,6 +125,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config(noreplace) %{_sysconfdir}/%{name}/input.conf
 
 %changelog
+* Tue May 05 2015 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.9.1-3
+- Revert patch for reject lua 5.3
+
 * Tue May 05 2015 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.9.1-2
 - Disable SDL2 backend
 - Apply patch to fix osc bar
