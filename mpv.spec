@@ -1,6 +1,6 @@
 Name:           mpv
-Version:        0.9.1
-Release:        3%{?dist}
+Version:        0.11.0
+Release:        0.1%{?dist}
 Summary:        Movie player playing most video formats and DVDs
 License:        GPLv2+
 URL:            http://%{name}.io/
@@ -12,10 +12,6 @@ Patch0:         %{name}-config.patch
 # Upstream commit to use waf >= 1.8 (reverted, rebased)
 # See https://github.com/mpv-player/mpv/issues/1363
 Patch1:         %{name}-old-waf.patch
-
-# https://github.com/mpv-player/mpv/pull/1914
-Patch2:         %{name}-lua-5.3.patch
-Patch3:         0001-Revert-lua-reject-Lua-5.3.patch
 
 BuildRequires:  aalib-devel
 BuildRequires:  alsa-lib-devel
@@ -40,6 +36,14 @@ BuildRequires:  libvdpau-devel
 BuildRequires:  libwayland-client-devel
 BuildRequires:  libwayland-cursor-devel
 BuildRequires:  libwayland-server-devel
+BuildRequires:  pkgconfig(wayland-egl)
+BuildRequires:  libv4l-devel
+BuildRequires:  lcms2-devel
+BuildRequires:  rubberband-devel
+BuildRequires:  luajit-devel
+BuildRequires:  pkgconfig(xrandr)
+BuildRequires:  libcaca-devel
+BuildRequires:  pkgconfig(jack)
 BuildRequires:  libxkbcommon-devel
 BuildRequires:  lirc-devel
 BuildRequires:  lua-devel
@@ -48,6 +52,8 @@ BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  python-docutils
 BuildRequires:  waf
 BuildRequires:  wayland-devel
+BuildRequires:  perl-Math-BigInt
+BuildRequires:  perl-Math-BigRat
 
 Requires:       hicolor-icon-theme
 
@@ -65,9 +71,6 @@ output methods are supported.
 %if 0%{?fedora} < 22
 %patch1 -p1
 %endif
-
-%patch2 -p1 -b .lua53
-%patch3 -p1 -b .lua53
 
 %build
 CCFLAGS="%{optflags}" \
@@ -95,6 +98,8 @@ desktop-file-install etc/mpv.desktop
 for RES in 16 32 64; do
   install -Dpm 644 etc/mpv-icon-8bit-${RES}x${RES}.png %{buildroot}%{_datadir}/icons/hicolor/${RES}x${RES}/apps/%{name}.png
 done
+
+rm -r %{buildroot}%{_datadir}/doc/%{name}
 
 %post
 update-desktop-database &>/dev/null || :
@@ -125,6 +130,9 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config(noreplace) %{_sysconfdir}/%{name}/input.conf
 
 %changelog
+* Wed Nov 11 2015 Arkady L. Shane <ashejn@russianfedora.pro> - 0.11.0-0.1.R
+- update to 0.11.0
+
 * Tue May 05 2015 Igor Gnatenko <ignatenkobrain@fedoraproject.org> - 0.9.1-3
 - Revert patch for reject lua 5.3
 
