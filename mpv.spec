@@ -1,6 +1,6 @@
 Name:           mpv
-Version:        0.11.0
-Release:        0.1%{?dist}
+Version:        0.13.0
+Release:        1%{?dist}
 Summary:        Movie player playing most video formats and DVDs
 License:        GPLv2+
 URL:            http://%{name}.io/
@@ -52,10 +52,12 @@ BuildRequires:  pulseaudio-libs-devel
 BuildRequires:  python-docutils
 BuildRequires:  waf
 BuildRequires:  wayland-devel
-BuildRequires:  perl-Math-BigInt
-BuildRequires:  perl-Math-BigRat
+BuildRequires:  perl(Math::BigInt)
+BuildRequires:  perl(Math::BigRat)
+BuildRequires:  uchardet-devel
 
 Requires:       hicolor-icon-theme
+Requires:       lib%{name}%{?_isa} = %{version}-%{release}
 
 %description
 Mpv is a movie player based on MPlayer and mplayer2. It supports a wide variety
@@ -63,6 +65,19 @@ of video file formats, audio and video codecs, and subtitle types. Special
 input URL types are available to read input from a variety of sources other
 than disk files. Depending on platform, a variety of different video and audio
 output methods are supported.
+
+%package -n libmpv
+Summary:        Shared library for MPV
+
+%description -n libmpv
+MPV shared library
+
+%package -n libmpv-devel
+Summary:        Headers for MPV library
+Requires:       lib%{name}%{?_isa} = %{version}-%{release}
+
+%description -n libmpv-devel
+Headers for MPV library
 
 %prep
 %setup -q
@@ -82,7 +97,8 @@ waf configure \
     --confdir="%{_sysconfdir}/%{name}" \
     --disable-sdl1 --disable-sdl2 \
     --disable-build-date \
-    --disable-debug
+    --enable-libmpv-shared \
+    --libdir="%{_libdir}"
 
 waf build --verbose %{?_smp_mflags}
 
@@ -117,6 +133,12 @@ fi
 gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor &>/dev/null || :
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
+%post -n libmpv -p /sbin/ldconfig
+
+
+%postun -n libmpv -p /sbin/ldconfig
+
+
 %files
 %license LICENSE Copyright
 %doc README.md
@@ -129,7 +151,21 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %config(noreplace) %{_sysconfdir}/%{name}/encoding-profiles.conf
 %config(noreplace) %{_sysconfdir}/%{name}/input.conf
 
+%files -n libmpv
+%license LICENSE Copyright
+%doc README.md
+%{_libdir}/lib%{name}.so.*
+
+%files -n libmpv-devel
+%{_includedir}/%{name}
+%{_libdir}/lib%{name}.so
+%{_libdir}/pkgconfig/%{name}.pc
+
+
 %changelog
+* Thu Nov 12 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 0.13.0-1.R
+- update to 0.13.0
+
 * Wed Nov 11 2015 Arkady L. Shane <ashejn@russianfedora.pro> - 0.11.0-0.1.R
 - update to 0.11.0
 
