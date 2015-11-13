@@ -158,7 +158,7 @@ gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor &>/dev/null || :
 
 
 %changelog
-* Fri Nov 12 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 0.13.0-2.R
+* Fri Nov 13 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 0.13.0-2.R
 - Clean spec
 - Use fedora gcc flags
 
