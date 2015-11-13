@@ -9,10 +9,6 @@ Source0:        https://github.com/%{name}-player/%{name}/archive/v%{version}/%{
 # set defaults for Fedora
 Patch0:         %{name}-config.patch
 
-# Upstream commit to use waf >= 1.8 (reverted, rebased)
-# See https://github.com/mpv-player/mpv/issues/1363
-Patch1:         %{name}-old-waf.patch
-
 BuildRequires:  aalib-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  bzip2-devel
@@ -67,26 +63,22 @@ input URL types are available to read input from a variety of sources other
 than disk files. Depending on platform, a variety of different video and audio
 output methods are supported.
 
-%package -n libmpv
+%package        libs
 Summary:        Shared library for MPV
 
-%description -n libmpv
+%description    libs
 MPV shared library
 
-%package -n libmpv-devel
+%package        libs-devel
 Summary:        Headers for MPV library
-Requires:       lib%{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
-%description -n libmpv-devel
+%description    libs-devel
 Headers for MPV library
 
 %prep
 %setup -q
 %patch0 -p1
-
-%if 0%{?fedora} < 22
-%patch1 -p1
-%endif
 
 echo '#!/bin/bash' > configure
 chmod +x configure
@@ -114,9 +106,13 @@ install -Dpm 644 etc/input.conf %{buildroot}%{_sysconfdir}/%{name}/input.conf
 
 desktop-file-install etc/mpv.desktop
 
+# Install icons
 for RES in 16 32 64; do
   install -Dpm 644 etc/mpv-icon-8bit-${RES}x${RES}.png %{buildroot}%{_datadir}/icons/hicolor/${RES}x${RES}/apps/%{name}.png
 done
+
+install -Dpm 644 etc/%{name}.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+install -Dpm 644 etc/%{name}-symbolic.svg %{buildroot}%{_datadir}/icons/hicolor/symbolic/apps/%{name}-symbolic.svg
 
 rm -r %{buildroot}%{_datadir}/doc/%{name}
 
@@ -136,10 +132,10 @@ fi
 gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor &>/dev/null || :
 glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
-%post -n libmpv -p /sbin/ldconfig
+%post libs -p /sbin/ldconfig
 
 
-%postun -n libmpv -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 
 %files
@@ -148,18 +144,19 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.*
+%{_datadir}/icons/hicolor/*/apps/%{name}-symbolic.svg
 %{_mandir}/man1/%{name}.*
 %dir %{_sysconfdir}/%{name}
 %config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/%{name}/encoding-profiles.conf
 %config(noreplace) %{_sysconfdir}/%{name}/input.conf
 
-%files -n libmpv
+%files libs
 %license LICENSE Copyright
 %doc README.md
 %{_libdir}/lib%{name}.so.*
 
-%files -n libmpv-devel
+%files libs-devel
 %{_includedir}/%{name}
 %{_libdir}/lib%{name}.so
 %{_libdir}/pkgconfig/%{name}.pc
