@@ -104,17 +104,18 @@ waf --destdir=%{buildroot} install %{?_smp_mflags}
 install -Dpm 644 etc/example.conf %{buildroot}%{_sysconfdir}/%{name}/%{name}.conf
 install -Dpm 644 etc/input.conf %{buildroot}%{_sysconfdir}/%{name}/input.conf
 
-desktop-file-install etc/mpv.desktop
-
 # Install icons
-for RES in 16 32 64; do
-  install -Dpm 644 etc/mpv-icon-8bit-${RES}x${RES}.png %{buildroot}%{_datadir}/icons/hicolor/${RES}x${RES}/apps/%{name}.png
-done
+# for RES in 16 32 64; do
+#   install -Dpm 644 etc/mpv-icon-8bit-${RES}x${RES}.png %{buildroot}%{_datadir}/icons/hicolor/${RES}x${RES}/apps/%{name}.png
+# done
 
 install -Dpm 644 etc/%{name}.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 install -Dpm 644 etc/%{name}-symbolic.svg %{buildroot}%{_datadir}/icons/hicolor/symbolic/apps/%{name}-symbolic.svg
 
 rm -r %{buildroot}%{_datadir}/doc/%{name}
+
+%check
+desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %post
 update-desktop-database &>/dev/null || :
@@ -125,12 +126,10 @@ update-desktop-database &> /dev/null || :
 if [ $1 -eq 0 ] ; then
   touch --no-create %{_datadir}/icons/hicolor &>/dev/null
   gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor &>/dev/null || :
-  glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 fi
 
 %posttrans
 gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor &>/dev/null || :
-glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 %post libs -p /sbin/ldconfig
 
@@ -143,7 +142,8 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 %doc README.md
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/icons/hicolor/*/apps/%{name}.*
+%{_datadir}/icons/hicolor/*/apps/%{name}.png
+%{_datadir}/icons/hicolor/*/apps/%{name}.svg
 %{_datadir}/icons/hicolor/*/apps/%{name}-symbolic.svg
 %{_mandir}/man1/%{name}.*
 %dir %{_sysconfdir}/%{name}
