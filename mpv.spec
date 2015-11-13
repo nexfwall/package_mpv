@@ -1,6 +1,6 @@
 Name:           mpv
 Version:        0.13.0
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Movie player playing most video formats and DVDs
 License:        GPLv2+
 URL:            http://%{name}.io/
@@ -55,9 +55,10 @@ BuildRequires:  wayland-devel
 BuildRequires:  perl(Math::BigInt)
 BuildRequires:  perl(Math::BigRat)
 BuildRequires:  uchardet-devel
+BuildRequires:  mesa-libgbm-devel
 
 Requires:       hicolor-icon-theme
-Requires:       lib%{name}%{?_isa} = %{version}-%{release}
+
 
 %description
 Mpv is a movie player based on MPlayer and mplayer2. It supports a wide variety
@@ -87,15 +88,17 @@ Headers for MPV library
 %patch1 -p1
 %endif
 
+echo '#!/bin/bash' > configure
+chmod +x configure
+
 %build
-CCFLAGS="%{optflags}" \
+%configure
 waf configure \
     --prefix="%{_prefix}" \
     --bindir="%{_bindir}" \
     --mandir="%{_mandir}" \
     --docdir="%{_docdir}/%{name}" \
     --confdir="%{_sysconfdir}/%{name}" \
-    --disable-sdl1 --disable-sdl2 \
     --disable-build-date \
     --enable-libmpv-shared \
     --libdir="%{_libdir}"
@@ -163,6 +166,10 @@ glib-compile-schemas %{_datadir}/glib-2.0/schemas &> /dev/null || :
 
 
 %changelog
+* Fri Nov 12 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 0.13.0-2.R
+- Clean spec
+- Use fedora gcc flags
+
 * Thu Nov 12 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 0.13.0-1.R
 - update to 0.13.0
 
