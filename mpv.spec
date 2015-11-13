@@ -104,11 +104,6 @@ waf --destdir=%{buildroot} install %{?_smp_mflags}
 install -Dpm 644 etc/example.conf %{buildroot}%{_sysconfdir}/%{name}/%{name}.conf
 install -Dpm 644 etc/input.conf %{buildroot}%{_sysconfdir}/%{name}/input.conf
 
-# Install icons
-# for RES in 16 32 64; do
-#   install -Dpm 644 etc/mpv-icon-8bit-${RES}x${RES}.png %{buildroot}%{_datadir}/icons/hicolor/${RES}x${RES}/apps/%{name}.png
-# done
-
 install -Dpm 644 etc/%{name}.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 install -Dpm 644 etc/%{name}-symbolic.svg %{buildroot}%{_datadir}/icons/hicolor/symbolic/apps/%{name}-symbolic.svg
 
