@@ -66,6 +66,8 @@ output methods are supported.
 %package        libs
 Summary:        Shared library for MPV
 
+Obsoletes:      libmpv
+
 %description    libs
 MPV shared library
 
