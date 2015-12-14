@@ -73,6 +73,15 @@ Requires:       %{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 %description    libs-devel
 Headers for MPV library.
 
+%package        zsh
+Summary:	MPV zsh completion support
+BuildArch:      noarch
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:       zsh
+
+%description    zsh
+This package provides zsh completion script of MPV.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -85,12 +94,11 @@ chmod +x configure
 waf configure \
           --prefix="%{_prefix}" \
           --bindir="%{_bindir}" \
-          --libdir="%{_libdir}" \
-          --mandir="%{_mandir}" \
-          --docdir="%{_docdir}/%{name}" \
           --confdir="%{_sysconfdir}/%{name}" \
+          --libdir="%{_libdir}" \
           --disable-build-date \
-          --enable-libmpv-shared
+          --enable-libmpv-shared \
+          --enable-zsh-comp
 
 waf build --verbose
 
@@ -140,6 +148,9 @@ fi
 %{_includedir}/%{name}
 %{_libdir}/lib%{name}.so
 %{_libdir}/pkgconfig/%{name}.pc
+
+%files zsh
+%{_datadir}/zsh/site-functions/_%{name}
 
 %changelog
 * Mon Dec 14 2015 Maxim Orlov <murmansksity@gmail.com> - 1:0.14.0-1.R
