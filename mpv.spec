@@ -1,82 +1,77 @@
 Name:           mpv
-Version:        0.13.0
-Release:        2%{?dist}
-Summary:        Movie player playing most video formats and DVDs
-License:        GPLv2+
-URL:            http://%{name}.io/
-Source0:        https://github.com/%{name}-player/%{name}/archive/v%{version}/%{name}-%{version}.tar.gz
+Version:        0.14.0
+Release:        1%{?dist}
+Epoch:          1
+Summary:        A free, open source, and cross-platform media player
 
-# set defaults for Fedora
-Patch0:         %{name}-config.patch
+License:        GPLv2+
+URL:            https://mpv.io/
+Source0:        https://github.com/%{name}-player/%{name}/archive/v%{version}.tar.gz
+# Fix rpmlint incorrect-fsf-address
+Patch0:         %{name}-incorrect-fsf-address.patch
 
 BuildRequires:  aalib-devel
 BuildRequires:  alsa-lib-devel
 BuildRequires:  bzip2-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  ffmpeg-devel
-BuildRequires:  ffmpeg-libs
-BuildRequires:  libcdio-devel
-BuildRequires:  libcdio-paranoia-devel
-BuildRequires:  libGL-devel
+BuildRequires:  jack-audio-connection-kit-devel
+BuildRequires:  lcms2-devel
 BuildRequires:  libXScrnSaver-devel
 BuildRequires:  libXinerama-devel
+BuildRequires:  libXrandr-devel
 BuildRequires:  libXv-devel
 BuildRequires:  libass-devel
 BuildRequires:  libbluray-devel
+BuildRequires:  libcaca-devel
+BuildRequires:  libcdio-devel
+BuildRequires:  libcdio-paranoia-devel
 BuildRequires:  libdvdnav-devel
 BuildRequires:  libguess-devel
 BuildRequires:  libquvi-devel
 BuildRequires:  libsmbclient-devel
+BuildRequires:  libv4l-devel
 BuildRequires:  libva-devel
 BuildRequires:  libvdpau-devel
 BuildRequires:  libwayland-client-devel
 BuildRequires:  libwayland-cursor-devel
 BuildRequires:  libwayland-server-devel
-BuildRequires:  pkgconfig(wayland-egl)
-BuildRequires:  libv4l-devel
-BuildRequires:  lcms2-devel
-BuildRequires:  rubberband-devel
-BuildRequires:  luajit-devel
-BuildRequires:  pkgconfig(xrandr)
-BuildRequires:  libcaca-devel
-BuildRequires:  pkgconfig(jack)
 BuildRequires:  libxkbcommon-devel
 BuildRequires:  lirc-devel
 BuildRequires:  lua-devel
+BuildRequires:  luajit-devel
+BuildRequires:  mesa-libGL-devel
+BuildRequires:  mesa-libgbm-devel
+BuildRequires:  mesa-libwayland-egl-devel
 BuildRequires:  ncurses-devel
-BuildRequires:  pulseaudio-libs-devel
-BuildRequires:  python-docutils
-BuildRequires:  waf
-BuildRequires:  wayland-devel
 BuildRequires:  perl(Math::BigInt)
 BuildRequires:  perl(Math::BigRat)
+BuildRequires:  pulseaudio-libs-devel
+BuildRequires:  python-docutils
+BuildRequires:  rubberband-devel
 BuildRequires:  uchardet-devel
-BuildRequires:  mesa-libgbm-devel
+BuildRequires:  waf
+BuildRequires:  wayland-devel
 
 Requires:       hicolor-icon-theme
 
-
 %description
-Mpv is a movie player based on MPlayer and mplayer2. It supports a wide variety
-of video file formats, audio and video codecs, and subtitle types. Special
-input URL types are available to read input from a variety of sources other
-than disk files. Depending on platform, a variety of different video and audio
-output methods are supported.
+Mpv is a fork of mplayer2 and MPlayer. It shares some features with the former
+projects while introducing many more.
 
 %package        libs
 Summary:        Shared library for MPV
-
 Obsoletes:      libmpv
 
 %description    libs
-MPV shared library
+MPV shared library.
 
 %package        libs-devel
 Summary:        Headers for MPV library
 Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
 
 %description    libs-devel
-Headers for MPV library
+Headers for MPV library.
 
 %prep
 %setup -q
@@ -88,65 +83,55 @@ chmod +x configure
 %build
 %configure
 waf configure \
-    --prefix="%{_prefix}" \
-    --bindir="%{_bindir}" \
-    --mandir="%{_mandir}" \
-    --docdir="%{_docdir}/%{name}" \
-    --confdir="%{_sysconfdir}/%{name}" \
-    --disable-build-date \
-    --enable-libmpv-shared \
-    --libdir="%{_libdir}"
+          --prefix="%{_prefix}" \
+          --bindir="%{_bindir}" \
+          --libdir="%{_libdir}" \
+          --mandir="%{_mandir}" \
+          --docdir="%{_docdir}/%{name}" \
+          --confdir="%{_sysconfdir}/%{name}" \
+          --disable-build-date \
+          --enable-libmpv-shared
 
-waf build --verbose %{?_smp_mflags}
+waf build --verbose
 
 %install
-waf --destdir=%{buildroot} install %{?_smp_mflags}
+waf install --destdir=%{buildroot}
 
-# Default config files
-install -Dpm 644 etc/example.conf %{buildroot}%{_sysconfdir}/%{name}/%{name}.conf
-install -Dpm 644 etc/input.conf %{buildroot}%{_sysconfdir}/%{name}/input.conf
-
-install -Dpm 644 etc/%{name}.svg %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 install -Dpm 644 etc/%{name}-symbolic.svg %{buildroot}%{_datadir}/icons/hicolor/symbolic/apps/%{name}-symbolic.svg
 
-rm -r %{buildroot}%{_datadir}/doc/%{name}
+rm -r %{buildroot}%{_docdir}/%{name}
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
 %post
-update-desktop-database &>/dev/null || :
-touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
+/usr/bin/update-desktop-database &> /dev/null || :
+/bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
 
 %postun
-update-desktop-database &> /dev/null || :
+/usr/bin/update-desktop-database &> /dev/null || :
 if [ $1 -eq 0 ] ; then
-  touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-  gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor &>/dev/null || :
+    /bin/touch --no-create %{_datadir}/icons/hicolor &> /dev/null || :
+    /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 fi
 
 %posttrans
-gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor &>/dev/null || :
+/usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &> /dev/null || :
 
 %post libs -p /sbin/ldconfig
-
-
 %postun libs -p /sbin/ldconfig
-
 
 %files
 %license LICENSE Copyright
-%doc README.md
+%doc README.md etc/input.conf etc/mplayer-input.conf etc/example.conf etc/restore-old-bindings.conf
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/icons/hicolor/*/apps/%{name}.svg
 %{_datadir}/icons/hicolor/*/apps/%{name}-symbolic.svg
-%{_mandir}/man1/%{name}.*
 %dir %{_sysconfdir}/%{name}
-%config(noreplace) %{_sysconfdir}/%{name}/%{name}.conf
 %config(noreplace) %{_sysconfdir}/%{name}/encoding-profiles.conf
-%config(noreplace) %{_sysconfdir}/%{name}/input.conf
+%{_mandir}/man1/%{name}.1.*
 
 %files libs
 %license LICENSE Copyright
@@ -158,8 +143,10 @@ gtk-update-icon-cache --quiet %{_datadir}/icons/hicolor &>/dev/null || :
 %{_libdir}/lib%{name}.so
 %{_libdir}/pkgconfig/%{name}.pc
 
-
 %changelog
+* Mon Dec 14 2015 Maxim Orlov <murmansksity@gmail.com> - 1:0.14.0-1.R
+- Update to 0.14.0
+
 * Fri Nov 13 2015 Vasiliy N. Glazov <vascom2@gmail.com> - 0.13.0-2.R
 - Clean spec
 - Use fedora gcc flags
