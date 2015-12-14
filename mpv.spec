@@ -68,7 +68,7 @@ MPV shared library.
 
 %package        libs-devel
 Summary:        Headers for MPV library
-Requires:       %{name}-libs%{?_isa} = %{version}-%{release}
+Requires:       %{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description    libs-devel
 Headers for MPV library.
@@ -98,8 +98,6 @@ waf build --verbose
 waf install --destdir=%{buildroot}
 
 install -Dpm 644 etc/%{name}-symbolic.svg %{buildroot}%{_datadir}/icons/hicolor/symbolic/apps/%{name}-symbolic.svg
-
-rm -r %{buildroot}%{_docdir}/%{name}
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
