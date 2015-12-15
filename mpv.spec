@@ -1,3 +1,5 @@
+%global		zshdir %{_datadir}/zsh/site-functions
+
 Name:           mpv
 Version:        0.14.0
 Release:        1%{?dist}
@@ -156,7 +158,7 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %files zsh
-%{_datadir}/zsh/site-functions/_%{name}
+%{zshdir}/_%{name}
 
 %changelog
 * Mon Dec 14 2015 Maxim Orlov <murmansksity@gmail.com> - 1:0.14.0-1.R
