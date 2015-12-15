@@ -10,40 +10,43 @@ Source0:        https://github.com/%{name}-player/%{name}/archive/v%{version}.ta
 # Fix rpmlint incorrect-fsf-address
 Patch0:         %{name}-incorrect-fsf-address.patch
 
-BuildRequires:  aalib-devel
 BuildRequires:  alsa-lib-devel
-BuildRequires:  bzip2-devel
 BuildRequires:  desktop-file-utils
+BuildRequires:  enca-devel
 BuildRequires:  ffmpeg-devel
 BuildRequires:  jack-audio-connection-kit-devel
 BuildRequires:  lcms2-devel
+BuildRequires:  libX11-devel
 BuildRequires:  libXScrnSaver-devel
+BuildRequires:  libXext-devel
 BuildRequires:  libXinerama-devel
 BuildRequires:  libXrandr-devel
 BuildRequires:  libXv-devel
+BuildRequires:  libarchive-devel
 BuildRequires:  libass-devel
 BuildRequires:  libbluray-devel
 BuildRequires:  libcaca-devel
 BuildRequires:  libcdio-devel
 BuildRequires:  libcdio-paranoia-devel
+BuildRequires:  libdrm-devel
 BuildRequires:  libdvdnav-devel
+BuildRequires:  libdvdread-devel
 BuildRequires:  libguess-devel
-BuildRequires:  libquvi-devel
+BuildRequires:  libjpeg-turbo-devel
 BuildRequires:  libsmbclient-devel
 BuildRequires:  libv4l-devel
 BuildRequires:  libva-devel
 BuildRequires:  libvdpau-devel
 BuildRequires:  libwayland-client-devel
 BuildRequires:  libwayland-cursor-devel
-BuildRequires:  libwayland-server-devel
 BuildRequires:  libxkbcommon-devel
-BuildRequires:  lirc-devel
 BuildRequires:  lua-devel
 BuildRequires:  luajit-devel
+BuildRequires:  mesa-libEGL-devel
 BuildRequires:  mesa-libGL-devel
 BuildRequires:  mesa-libgbm-devel
 BuildRequires:  mesa-libwayland-egl-devel
-BuildRequires:  ncurses-devel
+BuildRequires:  openal-soft-devel
 BuildRequires:  perl(Math::BigInt)
 BuildRequires:  perl(Math::BigRat)
 BuildRequires:  pulseaudio-libs-devel
@@ -52,6 +55,7 @@ BuildRequires:  rubberband-devel
 BuildRequires:  uchardet-devel
 BuildRequires:  waf
 BuildRequires:  wayland-devel
+BuildRequires:  zlib-devel
 
 Requires:       hicolor-icon-theme
 
@@ -96,8 +100,10 @@ waf configure \
           --bindir="%{_bindir}" \
           --confdir="%{_sysconfdir}/%{name}" \
           --libdir="%{_libdir}" \
-          --disable-build-date \
+          --disable-debug-build \
+          --enable-libarchive \
           --enable-libmpv-shared \
+          --enable-openal \
           --enable-zsh-comp
 
 waf build --verbose
