@@ -1,4 +1,4 @@
-%global		_zshdir %{_datadir}/zsh/site-functions
+%global         _zshdir %{_datadir}/zsh/site-functions
 
 Name:           mpv
 Version:        0.14.0
@@ -80,9 +80,9 @@ Requires:       %{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 Headers for MPV library.
 
 %package        zsh
-Summary:	MPV zsh completion support
+Summary:        MPV zsh completion support
 BuildArch:      noarch
-Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
 Requires:       zsh
 
 %description    zsh
