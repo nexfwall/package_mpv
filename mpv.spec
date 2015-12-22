@@ -98,17 +98,23 @@ chmod +x configure
 %build
 %configure
 waf configure \
-          --prefix="%{_prefix}" \
-          --bindir="%{_bindir}" \
-          --confdir="%{_sysconfdir}/%{name}" \
-          --libdir="%{_libdir}" \
+          --prefix=%{_prefix} \
+          --bindir=%{_bindir} \
+          --libdir=%{_libdir} \
+          --confdir=%{_sysconfdir}/%{name} \
+          --incdir=%{_includedir} \
+          --datadir=%{_datadir} \
+          --mandir=%{_mandir} \
+          --docdir=%{_docdir}/%{name} \
+          --zshdir=%{_zshdir} \
+          --disable-build-date \
           --disable-debug-build \
-          --enable-libarchive \
           --enable-libmpv-shared \
+          --enable-libarchive \
           --enable-openal \
           --enable-zsh-comp
 
-waf build --verbose
+waf build -v
 
 %install
 waf install --destdir=%{buildroot}
