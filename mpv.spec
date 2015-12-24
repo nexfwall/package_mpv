@@ -121,6 +121,8 @@ waf install --destdir=%{buildroot}
 
 install -Dpm 644 etc/%{name}-symbolic.svg %{buildroot}%{_datadir}/icons/hicolor/symbolic/apps/%{name}-symbolic.svg
 
+rm -r %{buildroot}%{_docdir}/%{name}
+
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
 
@@ -143,7 +145,7 @@ fi
 
 %files
 %license LICENSE Copyright
-%doc README.md etc/input.conf etc/mplayer-input.conf etc/example.conf etc/restore-old-bindings.conf
+%doc README.md etc/input.conf etc/example.conf
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
