@@ -114,7 +114,7 @@ waf configure \
           --enable-openal \
           --enable-zsh-comp
 
-waf build -v
+waf build %{?_smp_mflags} -v
 
 %install
 waf install --destdir=%{buildroot}
