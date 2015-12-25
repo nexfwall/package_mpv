@@ -119,9 +119,9 @@ waf build %{?_smp_mflags} -v
 %install
 waf install --destdir=%{buildroot}
 
-install -Dpm 644 etc/%{name}-symbolic.svg %{buildroot}%{_datadir}/icons/hicolor/symbolic/apps/%{name}-symbolic.svg
+%{__install} -Dpm 644 etc/%{name}-symbolic.svg %{buildroot}%{_datadir}/icons/hicolor/symbolic/apps/%{name}-symbolic.svg
 
-rm -r %{buildroot}%{_docdir}/%{name}
+%{__rm} -r %{buildroot}%{_docdir}/%{name}
 
 %check
 desktop-file-validate %{buildroot}%{_datadir}/applications/%{name}.desktop
