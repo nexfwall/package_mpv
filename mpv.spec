@@ -89,8 +89,7 @@ Requires:       zsh
 This package provides zsh completion script of MPV.
 
 %prep
-%setup -q
-%patch0 -p1
+%autosetup -p1
 
 echo '#!/bin/bash' > configure
 chmod +x configure
