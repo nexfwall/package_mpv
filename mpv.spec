@@ -108,9 +108,64 @@ waf configure \
           --zshdir=%{_zshdir} \
           --disable-build-date \
           --disable-debug-build \
-          --enable-libmpv-shared \
+          --enable-alsa \
+          --enable-audio-input \
+          --enable-caca \
+          --enable-cdda \
+          --enable-dvbin \
+          --enable-dvdnav \
+          --enable-dvdread \
+          --enable-drm \
+          --enable-egl-drm \
+          --enable-egl-x11 \
+          --enable-enca \
+          --enable-encoding \
+          --enable-gbm \
+          --enable-gl \
+          --enable-gl-wayland \
+          --enable-gl-x11 \
+          --enable-iconv \
+          --enable-jack \
+          --enable-jpeg \
+          --enable-lcms2 \
+          --enable-libass \
+          --enable-libass-osd \
           --enable-libarchive \
+          --enable-libavdevice \
+          --enable-libavfilter \
+          --enable-libbluray \
+          --enable-libguess \
+          --enable-libmpv-shared \
+          --enable-libsmbclient \
+          --enable-libswresample \
+          --enable-libv4l2 \
+          --enable-lua \
+          --enable-manpage-build \
           --enable-openal \
+          --enable-oss-audio \
+          --enable-pulse \
+          --enable-rubberband \
+          --enable-shm \
+          --enable-termios \
+          --enable-tv \
+          --enable-tv-v4l2 \
+          --enable-uchardet \
+          --enable-vaapi \
+          --enable-vaapi-glx \
+          --enable-vaapi-hwaccel \
+          --enable-vaapi-wayland \
+          --enable-vaapi-x-egl \
+          --enable-vaapi-x11 \
+          --enable-vdpau \
+          --enable-vdpau-gl-x11 \
+          --enable-vdpau-hwaccel \
+          --enable-wayland \
+          --enable-x11 \
+          --enable-xext \
+          --enable-xinerama \
+          --enable-xrandr \
+          --enable-xss \
+          --enable-xv \
           --enable-zsh-comp
 
 waf build %{?_smp_mflags} -v
