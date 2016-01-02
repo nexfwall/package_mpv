@@ -11,6 +11,8 @@ URL:            https://mpv.io/
 Source0:        https://github.com/%{name}-player/%{name}/archive/v%{version}.tar.gz
 # Fix rpmlint incorrect-fsf-address
 Patch0:         %{name}-incorrect-fsf-address.patch
+# Install symbolic icon
+Patch1:         %{name}-symbolic.svg.patch
 
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(caca)
@@ -172,8 +174,6 @@ waf build %{?_smp_mflags} -v
 
 %install
 waf install --destdir=%{buildroot}
-
-%{__install} -Dpm 644 etc/%{name}-symbolic.svg %{buildroot}%{_datadir}/icons/hicolor/symbolic/apps/%{name}-symbolic.svg
 
 %{__rm} -r %{buildroot}%{_docdir}/%{name}
 

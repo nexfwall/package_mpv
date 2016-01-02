@@ -1,0 +1,13 @@
+diff --git a/wscript_build.py b/wscript_build.py
+index 46ff204..39fb716 100644
+--- a/wscript_build.py
++++ b/wscript_build.py
+@@ -558,3 +558,7 @@ def build(ctx):
+         ctx.install_as(
+                 ctx.env.DATADIR + '/icons/hicolor/scalable/apps/mpv.svg',
+                 'etc/mpv-gradient.svg')
++
++        ctx.install_as(
++                ctx.env.DATADIR + '/icons/hicolor/symbolic/apps/mpv-symbolic.svg',
++                'etc/mpv-symbolic.svg')
+

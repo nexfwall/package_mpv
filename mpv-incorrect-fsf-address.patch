@@ -1,6 +1,7 @@
-diff -Naur mpv-0.14.0.orig/stream/dvb_tune.c mpv-0.14.0/stream/dvb_tune.c
---- mpv-0.14.0.orig/stream/dvb_tune.c 2015-12-11 21:20:29.000000000 +0300
-+++ mpv-0.14.0/stream/dvb_tune.c      2015-12-12 22:49:55.059648377 +0300
+diff --git a/stream/dvb_tune.c b/stream/dvb_tune.c
+index fa65156..53bacd0 100644
+--- a/stream/dvb_tune.c
++++ b/stream/dvb_tune.c
 @@ -18,7 +18,7 @@
  
     You should have received a copy of the GNU General Public License
