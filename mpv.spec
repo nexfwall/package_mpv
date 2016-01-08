@@ -141,6 +141,7 @@ waf configure \
           --enable-libswresample \
           --enable-libv4l2 \
           --enable-lua \
+          --lua=luajit \
           --enable-manpage-build \
           --enable-openal \
           --enable-oss-audio \
