@@ -42,7 +42,7 @@ BuildRequires:  pkgconfig(luajit)
 BuildRequires:  pkgconfig(openal)
 BuildRequires:  pkgconfig(rubberband)
 BuildRequires:  pkgconfig(smbclient)
-BuildRequires:  pkgconfig(uchardet)
+BuildRequires:  pkgconfig(uchardet) >= 0.0.5
 BuildRequires:  pkgconfig(vdpau)
 BuildRequires:  waf >= 1.8.16
 BuildRequires:  pkgconfig(wayland-client)
@@ -93,8 +93,8 @@ This package provides zsh completion script of MPV.
 %prep
 %autosetup -p1
 
-echo '#!/bin/bash' > configure
-chmod +x configure
+echo '#!/bin/bash' > ./configure
+chmod +x ./configure
 
 %build
 %configure
@@ -126,6 +126,7 @@ waf configure \
           --enable-gl \
           --enable-gl-wayland \
           --enable-gl-x11 \
+          --enable-html-build \
           --enable-iconv \
           --enable-jack \
           --enable-jpeg \
@@ -176,6 +177,8 @@ waf build %{?_smp_mflags} -v
 %install
 waf install --destdir=%{buildroot}
 
+%{__mv} %{buildroot}%{_docdir}/%{name}/%{name}.html .
+
 %{__rm} -r %{buildroot}%{_docdir}/%{name}
 
 %check
@@ -200,7 +203,7 @@ fi
 
 %files
 %license LICENSE Copyright
-%doc README.md etc/input.conf etc/mpv.conf
+%doc README.md etc/input.conf etc/mpv.conf mpv.html
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
