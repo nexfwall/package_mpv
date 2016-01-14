@@ -1,9 +1,10 @@
+# ZSH completion
 %global         _zshdir %{_datadir}/zsh/site-functions
 
 Name:           mpv
+Epoch:          1
 Version:        0.14.0
 Release:        1%{?dist}
-Epoch:          1
 Summary:        A free, open source, and cross-platform media player
 
 License:        GPLv2+
@@ -13,7 +14,7 @@ Source0:        https://github.com/%{name}-player/%{name}/archive/v%{version}.ta
 Patch0:         %{name}-incorrect-fsf-address.patch
 # Install symbolic icon
 Patch1:         %{name}-symbolic.svg.patch
-
+# Main dependencies
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(caca)
 BuildRequires:  desktop-file-utils
@@ -199,7 +200,7 @@ fi
 
 %files
 %license LICENSE Copyright
-%doc README.md etc/input.conf etc/example.conf
+%doc README.md etc/input.conf etc/mpv.conf
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
