@@ -3,7 +3,7 @@
 
 Name:           mpv
 Epoch:          1
-Version:        0.14.0
+Version:        0.15.0
 Release:        1%{?dist}
 Summary:        A free, open source, and cross-platform media player
 
@@ -44,7 +44,7 @@ BuildRequires:  pkgconfig(rubberband)
 BuildRequires:  pkgconfig(smbclient)
 BuildRequires:  pkgconfig(uchardet) >= 0.0.5
 BuildRequires:  pkgconfig(vdpau)
-BuildRequires:  waf >= 1.8.16
+BuildRequires:  waf >= 1.8.17
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(wayland-cursor)
 BuildRequires:  pkgconfig(wayland-egl)
@@ -227,6 +227,9 @@ fi
 %{_zshdir}/_%{name}
 
 %changelog
+* Mon Jan 18 2016 Maxim Orlov <murmansksity@gmail.com> - 1:0.15.0-1.R
+- Update to 0.15.0
+
 * Mon Dec 14 2015 Maxim Orlov <murmansksity@gmail.com> - 1:0.14.0-1.R
 - Update to 0.14.0
 
