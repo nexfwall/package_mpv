@@ -203,6 +203,7 @@ fi
 
 %files
 %license LICENSE Copyright
+# input.conf and mpv.conf files are fully documented and are just examples
 %doc README.md etc/input.conf etc/mpv.conf mpv.html
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
