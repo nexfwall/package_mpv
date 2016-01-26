@@ -155,6 +155,7 @@ waf configure \
           --enable-tv-v4l2 \
           --enable-uchardet \
           --enable-vaapi \
+          --enable-vaapi-drm \
           --enable-vaapi-glx \
           --enable-vaapi-hwaccel \
           --enable-vaapi-wayland \
