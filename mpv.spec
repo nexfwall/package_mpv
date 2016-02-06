@@ -135,7 +135,6 @@ waf configure \
           --enable-libass-osd \
           --enable-libarchive \
           --enable-libavdevice \
-          --enable-libavfilter \
           --enable-libbluray \
           --enable-libguess \
           --enable-libmpv-shared \
