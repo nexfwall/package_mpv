@@ -146,6 +146,7 @@ waf configure \
           --enable-manpage-build \
           --enable-openal \
           --enable-oss-audio \
+          --enable-plain-gl \
           --enable-pulse \
           --enable-rubberband \
           --enable-shm \
