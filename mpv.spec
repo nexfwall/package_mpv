@@ -3,7 +3,7 @@
 
 Name:           mpv
 Epoch:          1
-Version:        0.15.0
+Version:        0.16.0
 Release:        1%{?dist}
 Summary:        A free, open source, and cross-platform media player
 
@@ -17,7 +17,7 @@ Patch1:         %{name}-symbolic.svg.patch
 # Main dependencies
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(caca)
-BuildRequires:  desktop-file-utils
+BuildRequires:  /usr/bin/desktop-file-validate
 BuildRequires:  pkgconfig(dvdnav)
 BuildRequires:  pkgconfig(dvdread)
 BuildRequires:  pkgconfig(egl)
@@ -229,6 +229,9 @@ fi
 %{_zshdir}/_%{name}
 
 %changelog
+* Mon Feb 29 2016 Maxim Orlov <murmansksity@gmail.com> - 1:0.16.0-1.R
+- Update to 0.16.0
+
 * Mon Jan 18 2016 Maxim Orlov <murmansksity@gmail.com> - 1:0.15.0-1.R
 - Update to 0.15.0
 
