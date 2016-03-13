@@ -12,8 +12,6 @@ URL:            https://mpv.io/
 Source0:        https://github.com/%{name}-player/%{name}/archive/v%{version}.tar.gz
 # Fix rpmlint incorrect-fsf-address
 Patch0:         %{name}-incorrect-fsf-address.patch
-# Install symbolic icon
-Patch1:         %{name}-symbolic.svg.patch
 # Main dependencies
 BuildRequires:  pkgconfig(alsa)
 BuildRequires:  pkgconfig(caca)
