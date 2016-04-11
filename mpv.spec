@@ -3,7 +3,7 @@
 
 Name:           mpv
 Epoch:          1
-Version:        0.16.0
+Version:        0.17.0
 Release:        1%{?dist}
 Summary:        A free, open source, and cross-platform media player
 
@@ -227,6 +227,9 @@ fi
 %{_zshdir}/_%{name}
 
 %changelog
+* Mon Apr 11 2016 Maxim Orlov <murmansksity@gmail.com> - 1:0.17.0-1.R
+- Update to 0.17.0
+
 * Mon Feb 29 2016 Maxim Orlov <murmansksity@gmail.com> - 1:0.16.0-1.R
 - Update to 0.16.0
 
