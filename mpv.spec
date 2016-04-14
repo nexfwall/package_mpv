@@ -66,27 +66,27 @@ Mpv is a fork of mplayer2 and MPlayer. It shares some features with the former
 projects while introducing many more.
 
 %package        libs
-Summary:        Shared library for MPV
+Summary:        MPV shared library
 Obsoletes:      libmpv
 
 %description    libs
-MPV shared library.
+%{summary}.
 
 %package        libs-devel
-Summary:        Headers for MPV library
+Summary:        Development files for MPV library
 Requires:       %{name}-libs%{?_isa} = %{epoch}:%{version}-%{release}
 
 %description    libs-devel
-Headers for MPV library.
+%{summary}.
 
 %package        zsh
-Summary:        MPV zsh completion support
+Summary:        Zsh completion for MPV
 BuildArch:      noarch
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 Requires:       zsh
 
 %description    zsh
-This package provides zsh completion script of MPV.
+%{summary}.
 
 %prep
 %autosetup -p1
