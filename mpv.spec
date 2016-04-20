@@ -57,6 +57,7 @@ BuildRequires:  pkgconfig(xv)
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  perl(Math::BigInt)
 BuildRequires:  perl(Math::BigRat)
+BuildRequires:  perl(Encode)
 BuildRequires:  python-docutils
 
 Requires:       hicolor-icon-theme
